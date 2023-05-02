@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+</head>
+<body >
+<button id="connect">Connect</button>
+<div id = "auction">
+	
+</div>
+<form>
+<button type="submit" id="bid">Bid</button>
+</form>
+</body>
+<script>
+var stompClient = null;
+function connect() {
+    var socket = new SockJS('/gs-guide-websocket');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        //setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/auction/biddings', function (greeting) {
+            showGreeting(JSON.parse(greeting.body).content);
+        });
+    });
+}
+function showGreeting(message) {
+    $("#auction").append("<tr><td>" + message + "</td></tr>");
+}
+
+function sendName() {
+    stompClient.send("http://localhost:8080/app/auction/1/1/bid", {}, JSON.stringify({'name': $("#name").val()}));
+}
+
+$(function () {
+    $("form").on('submit', function (e) {
+        e.preventDefault();
+    });
+    $( "#connect" ).click(function() { console.log("connecting");connect(); });
+   
+    $( "#bid" ).click(function() { console.log("sending");sendName(); });
+});
+</script>
+</html>

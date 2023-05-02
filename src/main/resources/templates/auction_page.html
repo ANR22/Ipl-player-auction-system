@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>IPL Player Auction</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	<style>
+		#contain{
+			position: absolute;
+			top: 60%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			padding: 20px;
+			border-radius: 10px;
+			background-color: white;
+		}
+		#container img{
+			width: 200px;
+		}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="/">Player Auction System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+	<form id="logout" style="display:none" th:action="@{/admin/logout}" method="get">
+            <input type="submit" value="Sign Out"/>
+     </form>
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+    <li class="nav-item">
+        <a onclick="document.getElementById('logout').submit();" class="nav-link" style="cursor:pointer">
+        	Logout
+        </a>
+     </li>
+	<li class="nav-item">
+        <a class="nav-link" th:href="@{/dashboard}">Admin Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/teams}">Teams Management</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/players}">Players Management</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<h2 style="text-align:center">Auction Started</h2>
+<h3 style="text-align:center">Current Player:</h3>
+	<div id="contain">
+	<div id="container">Player Id:
+		<p id="player-info" th:text=${player.Id}></p></div>
+		<div id="container">Image
+		<p>
+			<img th:src="${player.ImgUrl}" alt="player image" />
+		</p>
+		</div>
+		<div id="container">Name: <p th:text="${player.Name}"></p></div>
+		<div id="container">Base Price: <p th:text="${player.BasePrice}"></p></div>
+		
+	</div>
+	
+</body>
+</html>

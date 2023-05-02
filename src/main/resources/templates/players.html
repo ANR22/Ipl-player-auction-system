@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>IPL PLayer Auction</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<style>
+#player-img{
+	width: 200px;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="/">Player Auction System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+	<form id="logout" style="display:none" th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+     </form>
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+    <li class="nav-item">
+        <a onclick="document.getElementById('logout').submit();" class="nav-link" style="cursor:pointer">
+        	Logout
+        </a>
+     </li>
+	<li class="nav-item">
+        <a class="nav-link" th:href="@{/dashboard}">Admin Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/teams}">Teams Management</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/players}">Players Management</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+	<div class ="container">
+		<div class = "row">
+			<h1> List Players </h1>
+		</div>
+		
+		<div class = "row">
+			<div class = "col-lg-3">
+				<a th:href = "@{/players/new}" class = "btn btn-primary btn-sm mb-3"> Add Player</a>
+			</div>
+		</div>
+		<table class = "table table-striped table-bordered">
+			<thead class = "table-dark">
+				<tr>
+					<th> Player Id</th>
+					<th> Player Image</th>
+					<th> Player Name</th>
+					<th> Player BasePrice(In Cr.)</th>
+					<th> Actions </th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each = "player: ${players}">
+					<td th:text = "${player.Id}"></td>
+					<td >
+					<img id="player-img" th:src="${player.ImgUrl}" alt="player image" />
+					</td>
+					<td th:text = "${player.Name}"></td>
+					<td th:text = "${player.BasePrice}"></td>
+					
+					<td>
+						<a th:href = "@{/players/edit/{id}(id=${player.id})}"
+						 class = "btn btn-primary">Update</a>
+						
+						<a th:href = "@{/players/{id}(id=${player.id})}"
+						 class = "btn btn-danger">Delete</a>
+						 
+					</td>
+				</tr>
+			</tbody>
+		
+		</table>
+		
+	</div>
+</body>
+</html>
