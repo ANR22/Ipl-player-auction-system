@@ -9,6 +9,42 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.websocket.player.Player;
 import com.websocket.player.PlayerService;
+import com.websocket.team.TeamService;
+
+//class AuctionDetails{
+//	boolean started;
+//	CurrentBid currentBid;
+//	Player player;
+//	public AuctionDetails() {
+//		super();
+//	}
+//	public AuctionDetails(boolean started, CurrentBid currentBid, Player player) {
+//		super();
+//		this.started = started;
+//		this.currentBid = currentBid;
+//		this.player = player;
+//	}
+//	public boolean getStarted() {
+//		return started;
+//	}
+//	public void setStarted(Boolean started) {
+//		this.started = started;
+//	}
+//	public CurrentBid getCurrentBid() {
+//		return currentBid;
+//	}
+//	public void setCurrentBid(CurrentBid currentBid) {
+//		this.currentBid = currentBid;
+//	}
+//	public Player getPlayer() {
+//		return player;
+//	}
+//	public void setPlayer(Player player) {
+//		this.player = player;
+//	}
+//	
+//}
+//
 
 @Configuration
 @JavaBean
@@ -19,6 +55,9 @@ public class Auction {
 	
 	@Autowired
 	private CurrentBid currentBid;
+	
+	@Autowired
+	private TeamService teamService;
 	
 	private int totalNumberOfPlayers;
 	private int currPlayerNumber;
@@ -110,6 +149,18 @@ public class Auction {
 		
 	}
 	
+	public boolean isStarted() {
+		return started;
+	}
+
+
+
+	public void setStarted(boolean started) {
+		this.started = started;
+	}
+
+
+
 	public String placeBid() {
 		
 		SoldPlayer sold = new SoldPlayer(currentBid); 
@@ -120,5 +171,19 @@ public class Auction {
 		}
 		return sold.getTeamId() + "" + sold.getTeamId();
 		
+	}
+	
+	public String getAuctionDetails() {
+		String player = "null";
+		String teamName = "null";
+		if (currentBid.getPlayerId() != null) {
+			player = playerService.getPlayerById(currentBid.getPlayerId()).getString()+"}";
+		}
+		if (currentBid.getTeamId() != null) {
+			teamName = teamService.getTeamById(currentBid.getTeamId()).getName();
+		}
+		String res = "{\"started\":"+started+",\"currentBid\":"+currentBid.getString()+",\"teamName\":\""+teamName+"\"},\"player\":"+player+"}";
+		System.out.println(res);
+		return res;
 	}
 }

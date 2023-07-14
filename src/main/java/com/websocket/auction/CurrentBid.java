@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @JavaBean
 public class CurrentBid {
+	
+	
 	private Long teamId;
 	private Long playerId;
 	
-	
-
 	private double currentBidAmount;
 	
 	
@@ -50,5 +50,8 @@ public class CurrentBid {
 		return "{\"teamId\":"+teamId+",\"teamName\":\""+teamName+"\",\"playerId\":"+playerId+",\"bidAmount\":"+currentBidAmount;
 	}
 	
+	public String getString() {
+		return "{\"teamId\":"+teamId+",\"playerId\":"+playerId+",\"bidAmount\":"+currentBidAmount;
+	}
 	
 }
