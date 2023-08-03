@@ -61,7 +61,7 @@ public class AuctionController {
 	public synchronized String timerStop(TimerStopMessage timerStopMessage) {
 		timerStopped += 1;
 		System.out.println("timerstop received");
-		if(timerStopped >= 1) {
+		if(timerStopped >= 2) {
 			System.out.println("bidding stop");
 			System.out.println(auc.placeBid());
 			Player nextPlayer = auc.getNextPlayer();
